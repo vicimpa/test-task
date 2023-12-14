@@ -1,0 +1,35 @@
+.input
+  border: 1px solid #999
+  padding: 5px 10px
+  border-radius: 4px
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 5px
+  min-width: 200px
+
+  .label
+    position: absolute
+    background-color: #fff
+    font-size: 12px
+    padding: 0px 3px
+    margin-left: -3px
+    transition: 0.1s
+    left: 10px
+    top: 5px
+    bottom: 5px
+
+  &:has( > input:focus)
+    border-color: #4a41ca
+    box-shadow: 0 0 2px #4a41ca
+
+  &:has( > input:focus), &:has( > input:not(:placeholder-shown))
+    .label
+      margin-top: -12px
+
+  input
+    border: none
+    outline: none
+    background: none
+    flex-grow: 1

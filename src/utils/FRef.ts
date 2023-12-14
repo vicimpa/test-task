@@ -1,0 +1,1 @@
+export type FRef<K extends keyof JSX.IntrinsicElements> = Omit<JSX.IntrinsicElements[K], 'ref'>;

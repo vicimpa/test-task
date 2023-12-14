@@ -3,6 +3,9 @@ import paths from "vite-tsconfig-paths";
 
 import react from "@vitejs/plugin-react-swc";
 
+import { BASE_ROUTE, PROXY_CONFIG, SERVER_HOST, SERVER_PORT } from "./config";
+import { server } from "./server/server";
+
 export default defineConfig({
   root: './src',
   base: './',
@@ -12,14 +15,17 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 3000
+    port: 3000,
+    proxy: PROXY_CONFIG
   },
   preview: {
     host: '127.0.0.1',
-    port: 3000
+    port: 3000,
+    proxy: PROXY_CONFIG
   },
   plugins: [
     react({ plugins: [] }),
-    paths({ projects: ['../tsconfig.json'] })
+    paths({ projects: ['../tsconfig.json'] }),
+    server()
   ],
 });
