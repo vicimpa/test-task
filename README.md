@@ -1,30 +1,76 @@
-# React + TypeScript + Vite
+# Тестовая приложуха для собеса
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Проект реализует `rest-api` `backend`, на котором есть:
+- `/api/users/check` - Поиск пользователя по "бд"
+  ```ts
+  {
+    email: string
+    number?: string
+  }
+  ```
+  успешным ответом должен быть
+  ```ts
+  {
+    code: 200
+    result: {
+      email: string,
+      number: string
+    }[]
+    resultCount: number
+  }
+  ```
 
-Currently, two official plugins are available:
+а так же `frontend`, который принимает данные от пользователя в форму и добавляет для отображения запросы. На `backend` реализованы задержка и ограничение на количество одновременных запросов. При попытке получить данные повторно, предыдущий запрос отменяется. Это `fullstack` приложение, поэтому немного поясню:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### Папочки
+- [public](public) - Папочка со статикой для фронта
+- [server](server) - Папочка, где реализован `backend`
+- [src](src) - Папочка, где реализован фронт
 
-## Expanding the ESLint configuration
+#### Зависимости
+- `vite` - Система сборки, которая запускает фронс с бэком (через самописный плагин [server/server.ts](server/server.ts))
+- `react` - Библиотека управления состоянием виртуального DOM
+- `react-dom` - Библиотека запуска виртуального DOM на реальный
+- `@preact/signals-react` - Система сигналов для React, упрощает взаимодействие состояния
+- `valibot` - Пакет для валидации данных
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#### Архитектура
+Back (`./server/*`):
+- [📁 models](server/models) - Модели верификации
+- [📁 routes](server/routes) - Роутеры приложения
+- [📁 services](server/services) - Сервисы приложения
+- [📁 utils](server/utils) - Папочка с утилитами
+- [app.ts](server/app.ts) - Главный файл приложения
+- [data.ts](server/data.ts) - Файлик с данными
+- [server.ts](server/server.ts) - Плагин для `vite`
 
-- Configure the top-level `parserOptions` property like this:
+Front (`./src/*`):
+- [📁 components](src/components) - Компоненты
+- [📁 hooks](src/hooks) - Кастомные хуки
+- [📁 utils](src/utils) - Папочка с утилитами
+- [app.tsx](src/app.tsx) - Приложение
+- [index.html](src/index.html) - Файлик страницы
+- [index.sass](src/index.sass) - Файлик стилей
+- [index.tsx](src/index.tsx) - Главный скрипт
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Core (`./*`):
+- [config.ts](config.ts) - Конфигурация всего
+- [types.ts](types.ts) - Тут валидаторы типов
+- [vite.config.ts](vite.config.ts) - Настройка сборщика
+- [tsconfig.json](tsconfig.json) - Настройка TS для фронта
+- [tsconfig.node.json](tsconfig.node.json) - Настройка TS для бэка
+- [package.json](package.json) - Файлик пакета со скриптами
+
+
+### Для `dev` запуска
+```bash
+> npm i
+> npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Для `prod` запуска
+```bash
+> npm i
+> npm run build
+> npm run preview
+```
