@@ -26,9 +26,10 @@ export const Button = forwardRef<HTMLButtonElement, TButtonProps>(
         className={s.button + ' ' + className}
         onMouseDown={(e) => {
           const { x, y } = e.currentTarget.getBoundingClientRect();
-          attempts.value++;
           pos.x = e.clientX - x;
           pos.y = e.clientY - y;
+          attempts.value++;
+
         }}
       >
         <button
@@ -38,9 +39,16 @@ export const Button = forwardRef<HTMLButtonElement, TButtonProps>(
           {children}
         </button>
 
-        {attempts.value > 0 ? (
-          <div key={attempts.value} style={{ top: pos.y + 'px', left: pos.x + 'px' }} className={s.click} />
+        {attempts.value ? (
+          <div
+            key={attempts.value}
+            style={{
+              top: pos.y + 'px',
+              left: pos.x + 'px'
+            }}
+            className={s.click} />
         ) : null}
+
       </div>
     );
   }

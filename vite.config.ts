@@ -3,7 +3,7 @@ import paths from "vite-tsconfig-paths";
 
 import react from "@vitejs/plugin-react-swc";
 
-import { BASE_ROUTE, PROXY_CONFIG, SERVER_HOST, SERVER_PORT } from "./config";
+import { PROXY_CONFIG } from "./config";
 import { server } from "./server/server";
 
 export default defineConfig({
